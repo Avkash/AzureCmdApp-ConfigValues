@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="AzureCmdApp" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition">
+    <WorkerRole name="CmdWorkerRole" vmsize="ExtraSmall">
+        <Runtime>
+            <Environment>
+                <Variable name="CONFSTRING1">
+                    <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/ConfigurationSettings/ConfigurationSetting[@name='SettingXYZ']/@value" />
+                </Variable>
+                <Variable name="CONFSTRING2">
+                    <RoleInstanceValue xpath="/RoleEnvironment/CurrentInstance/ConfigurationSettings/ConfigurationSetting[@name='SettingABC']/@value" />
+                </Variable>
+            </Environment>
+            <EntryPoint>
+                <ProgramEntryPoint commandLine="Startup.cmd" setReadyOnProcessStart="true" />
+            </EntryPoint>
+        </Runtime>
+        <Endpoints>
+            <InputEndpoint name="HttpIn" protocol="tcp" port="8999" />
+        </Endpoints>
+	    <ConfigurationSettings>
+			<Setting name="SettingXYZ" />
+			<Setting name="SettingABC" />
+		</ConfigurationSettings>
+    </WorkerRole>
+</ServiceDefinition>
